@@ -12,15 +12,6 @@ it:
 
   devise:
     failure:
-<<<<<<< HEAD
-      unauthenticated: 'Prima di continuare devi accedere oppure registrarti.'
-      unconfirmed: 'Prima di continuare devi confermare il tuo utente.'
-      locked: 'Il tuo utente è bloccato.'
-      invalid: 'La mail o la password non sono validi.'
-      invalid_token: 'Le informazioni di autenticazione non sono valide.'
-      timeout: 'La tua sessione è scaduta, accedi di nuovo per continuare.'
-      inactive: 'Il tuo accesso non è stato ancora attivato.'
-=======
       unauthenticated: "Devi effettuare l'accesso o registrarti prima di continuare."
       unconfirmed: "Devi confermare il tuo account prima di continuare."
       locked: "Il tuo account è bloccato."
@@ -28,7 +19,6 @@ it:
       invalid_token: "Token di autenticazione errato."
       timeout: "La tua sessione è scaduta, effettua di nuovo l'accesso per continuare."
       inactive: "Il tuo account non è ancora stato attivato."
->>>>>>> aa2ea3f300e3fe2140692f8ef4c49875b909b9c3
     sessions:
       signed_in: 'Accesso eseguito con successo.'
       signed_out: 'Uscita eseguita con successo.'
@@ -39,25 +29,13 @@ it:
       send_instructions: 'Nel giro di pochi minuti riceverai una mail con le istruzioni per confermare il tuo utente.'
       confirmed: 'Il tuo utente è stato correttamente conferamto. Ora sei collegato/a.'
     registrations:
-<<<<<<< HEAD
-      signed_up: 'La registrazione è completata. Se necessaria, una mail di conferma è stata spedita al tuo indirizzo.'
-      updated: 'L''aggiornamento del tuo utente è stato completato correttamente.'
-      destroyed: 'Ciao! Il tuo utente è stato cancallato correttamente. Speriamo di rivederci presto.'
-=======
       signed_up: "Ti sei iscritto. Se il servizio è disponibile, riceverai una conferma via email."
       updated: "Hai aggiornato il tuo account."
       destroyed: "Ciao! Il tuo account è stato rimosso. Speriamo che tu torni a trovarci presto."
->>>>>>> aa2ea3f300e3fe2140692f8ef4c49875b909b9c3
     unlocks:
       send_instructions: 'Nel giro di pochi minuti riceverai una mail con le istruzioni per sbloccare il tuo utente.'
       unlocked: 'Il tuo utente è stato sbloccato correttamente. Ora sei collegato/a.'
     mailer:
-<<<<<<< HEAD
-      confirmation_instructions: 'Istruzioni per la conferma dell''utente'
-      reset_password_instructions: 'Istruzioni per il ripristino della password'
-      unlock_instructions: 'Istruzioni per sbloccare l''utente'
-=======
       confirmation_instructions: "Istruzioni sulla conferma"
       reset_password_instructions: "Istruzioni su come cambiare la password"
       unlock_instructions: "Istruzioni su come sbloccare l'account"
->>>>>>> aa2ea3f300e3fe2140692f8ef4c49875b909b9c3
