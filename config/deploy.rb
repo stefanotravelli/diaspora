@@ -16,7 +16,6 @@ set :deploy_to, all['deploy_to']
 set :scm, :git
 set :user, all['user']
 #set :user, ARGV[0]
-set :password, all['password'] if all['password']
 set :scm_verbose, true
 set :repository, all['repo']
 set :branch, all['branch']
@@ -48,6 +47,11 @@ namespace :deploy do
   task :symlink_bundle do
     run "mkdir -p #{shared_path}/bundle"
     run "ln -s -f #{shared_path}/bundle #{current_path}/vendor/bundle"
+  end
+
+  task :symlink_config do
+    run "touch #{shared_path}/app_config.yml"
+    run "ln -s -f #{shared_path}/app_config.yml #{current_path}/config/app_config.yml"
   end
 
    task :start do
@@ -128,4 +132,4 @@ namespace :db do
 
 end
 
-after "deploy:symlink", "deploy:symlink_images", "deploy:symlink_bundle"
+after "deploy:symlink", "deploy:symlink_images", "deploy:symlink_bundle", 'deploy:symlink_config'
