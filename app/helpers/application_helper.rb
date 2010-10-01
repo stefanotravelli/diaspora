@@ -2,7 +2,6 @@
 #   licensed under the Affero General Public License version 3.  See
 #   the COPYRIGHT file.
 
-
 module ApplicationHelper
   def current_aspect?(aspect)
     !@aspect.is_a?(Symbol) && @aspect.id == aspect.id
@@ -57,11 +56,7 @@ module ApplicationHelper
   end
 
   def person_image_link(person)
-    if current_user.friends.include?(person) || current_user.person == person
-      link_to person_image_tag(person), object_path(person)
-    else
-      person_image_tag person
-    end
+    link_to person_image_tag(person), object_path(person)
   end
 
   def new_request(request_count)
@@ -70,5 +65,10 @@ module ApplicationHelper
 
   def post_yield_tag(post)
     (':' + post.id.to_s).to_sym
+  end
+
+  def connected_fb_as token
+    response_hash = MiniFB.get(token, 'me')
+    "Connected to facebook as #{response_hash[:name]}"
   end
 end
