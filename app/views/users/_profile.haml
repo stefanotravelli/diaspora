@@ -1,5 +1,5 @@
 -#   Copyright (c) 2010, Diaspora Inc.  This file is
--#   licensed under the Affero General Public License version 3.  See
+-#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
 
 
@@ -48,9 +48,9 @@
       = p.label :last_name
       = p.text_field :last_name, :value => @profile.last_name
 
-  #submit_block
-    = link_to t('.cancel'), root_path
-    or
+  .submit_block
+    = link_to t('.cancel'), edit_user_path(current_user)
+    = t('.or')
     = f.submit t('.update_profile')
 
 #content_bottom

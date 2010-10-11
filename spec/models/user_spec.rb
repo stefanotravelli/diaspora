@@ -1,5 +1,5 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
 require 'spec_helper'
@@ -12,12 +12,16 @@ describe User do
       user = Factory.build(:user, :username => "ALLUPPERCASE")
       user.valid?
       user.username.should == "alluppercase"
+
+      user = Factory.build(:user, :username => "someUPPERCASE")
+      user.valid?
+      user.username.should == "someuppercase"
     end
   end
 
   describe '#diaspora_handle' do
     it 'uses the pod config url to set the diaspora_handle' do
-      user.diaspora_handle.should == user.username + "@example.org"
+      user.diaspora_handle.should == user.username + "@" + APP_CONFIG[:terse_pod_url]
     end
   end
 

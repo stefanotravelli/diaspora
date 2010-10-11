@@ -1,8 +1,8 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-require File.expand_path('../../../lib/hcard', __FILE__)
+require File.join(Rails.root, 'lib/hcard')
 
 class Person
   include MongoMapper::Document
@@ -34,8 +34,21 @@ class Person
      /^(https?):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*(\.[a-z]{2,5})?(:[0-9]{1,5})?(\/.*)?$/ix
 
   def self.search(query)
-    query = Regexp.escape( query.to_s.strip )
-    Person.all('profile.first_name' => /^#{query}/i) | Person.all('profile.last_name' => /^#{query}/i)
+    qTokens = query.to_s.strip.split(" ")
+    fullQueryText = Regexp.escape( query.to_s.strip )
+    p = []
+    
+    qTokens.each {
+        |token|
+        
+        q = Regexp.escape( token.to_s.strip )
+        p = Person.all('profile.first_name' => /^#{q}/i) \
+                 | Person.all('profile.last_name' => /^#{q}/i) \
+                     | p
+                
+   }
+
+   return p
   end
 
   def real_name
@@ -50,7 +63,7 @@ class Person
   end
 
   def public_url
-    "#{self.url}users/#{self.owner.username}/public"
+    "#{self.url}public/#{self.owner.username}"
   end
 
 
@@ -110,7 +123,7 @@ class Person
     hcard = HCard.find profile.hcard.first[:href]
 
     new_person.url = hcard[:url]
-    new_person.profile = Profile.new(:first_name => hcard[:given_name], :last_name => hcard[:family_name])
+    new_person.profile = Profile.new(:first_name => hcard[:given_name], :last_name => hcard[:family_name], :image_url => hcard[:photo])
     if new_person.save
       new_person
     else
