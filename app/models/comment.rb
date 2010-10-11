@@ -1,7 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
 
 class Comment
   include MongoMapper::Document
@@ -18,7 +17,6 @@ class Comment
   key :text,      String
   key :post_id,   ObjectId
   key :person_id, ObjectId
-
 
   belongs_to :post,   :class_name => "Post"
   belongs_to :person, :class_name => "Person"

@@ -1,8 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
-
 
 config = YAML.load_file(File.dirname(__FILE__) + '/deploy_config.yml')
 all = config['cross_server']
@@ -35,7 +33,7 @@ role :pivots, config['servers']['pivots']['url']
 
 # Start Nginx
 after "deploy:cold" do
-  #run("nginx")
+  run("nginx")
 end
 
 namespace :deploy do
@@ -52,6 +50,11 @@ namespace :deploy do
   task :symlink_config do
     run "touch #{shared_path}/app_config.yml"
     run "ln -s -f #{shared_path}/app_config.yml #{current_path}/config/app_config.yml"
+  end
+
+  task :symlink_fb_config do
+    run "touch #{shared_path}/fb_config.yml"
+    run "ln -s -f #{shared_path}/fb_config.yml #{current_path}/config/fb_config.yml"
   end
 
    task :start do
@@ -104,7 +107,6 @@ namespace :deploy do
     run 'gem install bundler'
   end
 
-
   task :migrate do
   end
  end
@@ -129,7 +131,6 @@ namespace :db do
     purge
   end
 
-
 end
 
-after "deploy:symlink", "deploy:symlink_images", "deploy:symlink_bundle", 'deploy:symlink_config'
+after "deploy:symlink", "deploy:symlink_images", "deploy:symlink_bundle", 'deploy:symlink_config', 'deploy:symlink_fb_config'

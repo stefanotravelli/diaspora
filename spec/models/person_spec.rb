@@ -1,10 +1,8 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-
-
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Person do
   before do
@@ -18,13 +16,13 @@ describe Person do
   describe '#diaspora_handle' do
     context 'local people' do
       it 'uses the pod config url to set the diaspora_handle' do
-        @user.person.diaspora_handle.should == @user.username + "@example.org"
+        @user.person.diaspora_handle.should == @user.username + "@" + APP_CONFIG[:terse_pod_url]
       end
     end
-    
+
     context 'remote people' do
       it 'stores the diaspora_handle in the database' do
-        @person.diaspora_handle.include?(@user.terse_url).should be false
+        @person.diaspora_handle.include?(APP_CONFIG[:terse_pod_url]).should be false
       end
     end
   end
@@ -170,18 +168,6 @@ describe Person do
       stub_success("tom@tom.joindiaspora.com")
       tom = Person.by_webfinger('tom@tom.joindiaspora.com')
       tom.real_name.include?("Hamiltom").should be true
-    end
-
-    describe 'wall posting' do
-      it 'should be able to post on another persons wall' do
-        pending
-        #user2 is in user's aspect, user is in aspect2 on user
-        friend_users(@user, @aspect, @user2, @aspect2)
-
-        @user.person.post_to_wall(:person => @user2.person, :message => "youve got a great smile")
-        @user.person.wall_posts.count.should == 1
-
-      end
     end
 
   end

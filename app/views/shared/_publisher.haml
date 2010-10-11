@@ -1,7 +1,6 @@
 -#   Copyright (c) 2010, Diaspora Inc.  This file is
--#   licensed under the Affero General Public License version 3.  See
+-#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
-
 
 #publisher
   = owner_image_tag
@@ -18,5 +17,11 @@
         %li
           = check_box_tag("aspect_ids[]", aspect.id, @aspect == :all || current_aspect?(aspect) )
           = aspect.name
-      
-    = f.submit "Share"
+
+    = f.hidden_field( :public, :value => false )
+  
+    .buttons
+      = f.submit t('.share')
+      - if defined? broadcast
+        = f.submit "Broadcast", :class => "broadcast", :name => "broadcast"
+

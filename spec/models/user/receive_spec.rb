@@ -1,10 +1,8 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-
-
-require File.dirname(__FILE__) + '/../../spec_helper'
+require 'spec_helper'
 
 describe User do
 
@@ -52,10 +50,15 @@ describe User do
 
     end
 
-    it "should add the post to that user's posts when a user posts it" do
+    it "should add a received post to the aspect and visible_posts array" do
       status_message = @user.post :status_message, :message => "hi", :to => @aspect.id
       @user.reload
-      @user.raw_visible_posts.include?(status_message).should be true
+      salmon = @user.salmon(status_message).xml_for @user2.person
+      @user2.receive_salmon salmon
+      @user2.reload
+      @user2.raw_visible_posts.include?(status_message).should be true
+      @aspect2.reload
+      @aspect2.posts.include?(status_message).should be_true
     end
 
     it 'should be removed on unfriending' do
@@ -175,11 +178,11 @@ describe User do
   describe 'salmon' do
     before do
       @post = @user.post :status_message, :message => "hello", :to => @aspect.id
-      @salmon = @user.salmon( @post, :to => @user2.person )
+      @salmon = @user.salmon( @post )
     end
 
     it 'should receive a salmon for a post' do
-      @user2.receive_salmon( @user2.person.encrypt(@salmon.to_xml) )
+      @user2.receive_salmon( @salmon.xml_for @user2.person )
       @user2.visible_post_ids.include?(@post.id).should be true
     end
   end

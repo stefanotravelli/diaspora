@@ -1,8 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
-
 
 require File.expand_path('../boot', __FILE__)
 
@@ -13,7 +11,7 @@ require 'active_resource/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-require 'lib/mongo_mapper/bson_id'
+require File.expand_path('../../lib/mongo_mapper/bson_id', __FILE__)
 module Diaspora
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

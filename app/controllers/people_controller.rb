@@ -1,7 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
 
 class PeopleController < ApplicationController
   before_filter :authenticate_user!
@@ -18,11 +17,23 @@ class PeopleController < ApplicationController
   end
 
   def show
-    @person = current_user.visible_person_by_id(params[:id])
+    begin
+      @person = current_user.visible_person_by_id(params[:id])
+    rescue BSON::InvalidObjectId
+      flash[:error] = "Person not found."
+      redirect_to people_path
+      return
+    end
+    unless @person
+      flash[:error] = "Person not found."
+      redirect_to people_path
+      return
+    end
+
     @profile = @person.profile
     @aspects_with_person = current_user.aspects_with_person(@person)
     @aspects_dropdown_array = current_user.aspects.collect{|x| [x.to_s, x.id]}
-    @posts = current_user.visible_posts(:from => @person).paginate :page => params[:page], :order => 'created_at DESC'
+    @posts = current_user.visible_posts(:person_id => @person.id).paginate :page => params[:page], :order => 'created_at DESC'
     @latest_status_message = current_user.raw_visible_posts.find_all_by__type_and_person_id("StatusMessage", params[:id]).last
     @post_count = @posts.count
     respond_with @person

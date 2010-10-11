@@ -1,19 +1,19 @@
 /*   Copyright (c) 2010, Diaspora Inc.  This file is
-*   licensed under the Affero General Public License version 3.  See
+*   licensed under the Affero General Public License version 3 or later.  See
 *   the COPYRIGHT file.
 */
 
 
 $(document).ready(function(){
-	
+
 	$('#debug_info').click(function() {
 		$('#debug_more').toggle('fast');
 	});
-	
+
   $("label").inFieldLabels();
-	
+
   $('#flash_notice, #flash_error, #flash_alert').delay(2500).slideUp(130);
-  
+
   $("div.image_cycle").cycle({
     fx: 'fade',
     random: 1,
@@ -66,3 +66,10 @@ $.fn.clearForm = function() {
   });
 };
 
+$("#publisher .broadcast").live("click", function(evt){
+  evt.preventDefault();
+  if( confirm("Broadcast to the world?") ) {
+    $("#status_message_public").val("true");
+    $(this).submit();
+  }
+});

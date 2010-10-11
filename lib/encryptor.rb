@@ -1,8 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
-
 
 module Encryptor
   module Public
@@ -33,7 +31,7 @@ module Encryptor
     end
 
     def encrypt_aes_key key
-      Base64.encode64 encryption_key.public_encrypt( key.to_json )
+      Base64.encode64 public_key.public_encrypt( key.to_json )
     end
   end
 
@@ -59,7 +57,6 @@ module Encryptor
       txt << cipher.final
       txt
     end
-
 
   end
 end

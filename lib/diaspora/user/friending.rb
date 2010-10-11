@@ -1,15 +1,13 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
-
 
 module Diaspora
   module UserModules
     module Friending
       def send_friend_request_to(desired_friend, aspect)
         # should have different exception types for these?
-        raise "You have already sent a friend request to that person!" if self.pending_requests.detect{ 
+        raise "You have already sent a friend request to that person!" if self.pending_requests.detect{
           |x| x.destination_url == desired_friend.receive_url }
         raise "You are already friends with that person!" if self.friends.detect{
           |x| x.receive_url == desired_friend.receive_url}
@@ -24,11 +22,10 @@ module Diaspora
           aspect.requests << request
           aspect.save
 
-          salmon request, :to => desired_friend
+          push_to_people request, [desired_friend]
         end
         request
       end
-
 
       def accept_friend_request(friend_request_id, aspect_id)
         request = Request.find_by_id(friend_request_id)
@@ -41,7 +38,8 @@ module Diaspora
       end
 
       def dispatch_friend_acceptance(request, requester)
-        salmon request, :to => requester
+        friend_acceptance = salmon(request)
+        push_to_person requester, friend_acceptance.xml_for(requester)
         request.destroy unless request.callback_url.include? url
       end
 
@@ -83,13 +81,13 @@ module Diaspora
       def unfriend(bad_friend)
         Rails.logger.info("#{self.real_name} is unfriending #{bad_friend.inspect}")
         retraction = Retraction.for(self)
-        salmon( retraction, :to => bad_friend)
+        push_to_people retraction, [bad_friend]
         remove_friend(bad_friend)
       end
 
       def remove_friend(bad_friend)
         raise "Friend not deleted" unless self.friend_ids.delete( bad_friend.id )
-        aspects.each{|aspect| 
+        aspects.each{|aspect|
           aspect.person_ids.delete( bad_friend.id )}
         self.save
 

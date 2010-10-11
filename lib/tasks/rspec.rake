@@ -1,8 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
-
 
 begin
   require 'rspec/core'
@@ -32,13 +30,10 @@ MSG
   end
 end
 
-Rake.application.instance_variable_get('@tasks').delete('default')
-
 spec_prereq = Rails.root.join('config', 'database.yml').exist? ? "db:test:prepare" : :noop
 task :noop do
 end
 
-task :default => :spec
 task :stats => "spec:statsetup"
 
 desc "Run all specs in spec directory (excluding plugin specs)"

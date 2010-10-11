@@ -1,5 +1,5 @@
 //   Copyright (c) 2010, Diaspora Inc.  This file is
-//   licensed under the Affero General Public License version 3.  See
+//   licensed under the Affero General Public License version 3 or later.  See
 //   the COPYRIGHT file.
 
 
@@ -15,28 +15,21 @@ body
   :padding 2em
   :margin 0
 a
-  :color #556270
   :color #107FC9
-  :color #019DBE
   :text
     :decoration none
   &:hover
-    :color #fff
-    :background
-      :color #556270
-      :color #019DBE
+    :color #22AAE0
+  &:active
+    :color #005D9C
+    
 
-h1
-  :font
-    :size 21px
-    :weight bold
-  :line
-    :height 36px
+h1, h2, h3, h4
+  :color #444
 
 h3
   :font
-    :size 18px 
-    :weight bold
+    :size 18px
 
 .avatar
   :width 50px
@@ -54,7 +47,7 @@ h3
   :left 50%
   :text
     :align center
-  :font 
+  :font
     :size 14px
   :padding 3px 0
 
@@ -146,6 +139,11 @@ header
             :right 0
 
   #aspect_header
+    :-webkit-box-shadow 0px -4px 6px -2px #777
+    
+    :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F7F7F7), to(#EEEEEE))
+    :background -moz-linear-gradient(19% 75% 90deg, #eee, #f7f7f7)
+
     :background
       :color #eee
     :border
@@ -153,12 +151,10 @@ header
     :padding 20px 0
 
     h1
-      :margin
-        :bottom 0
-      :text-shadow 0 2px 0 #fff
+      :text-shadow 0 1px 0 #fff
 
     a
-      :color #111
+      :color #444
       &:hover
         :background none
         :color #999
@@ -166,9 +162,7 @@ header
     .page_title
       :text
         :transform uppercase
-        :shadow 0 2px 0 #fff
-      :margin
-        :top -5px
+        :shadow 0 1px 0 #fff
 
 
 ul#stream
@@ -184,7 +178,8 @@ ul#stream
     &:hover
       :background
         :color #fafafa
-
+      :border
+        :bottom 1px solid #ddd
       .destroy_link
         :display inline
 
@@ -193,10 +188,10 @@ ul#stream
 
 li.message
   :position relative
-  :line-height 140%
+  :line-height 19px
   :font
-    :family 'Lucida Grande', sans-serif
-  :color #999
+    :family 'Arial', 'Helvetica', sans-serif
+  :color #777
 
   .avatar
     :float left
@@ -205,27 +200,89 @@ li.message
 
   .delete:hover
     :background #eee
-    
+
   .content
+    :max-width 610px
+    :margin
+      :top -4px
     :padding
       :left 65px
 
-    span.from
-      :color #000
+    .from
       :font
-        :weight normal
-      :font
-        :size 110%
+        :family 'Helvetica neue', Arial, Helvetica, sans-serif
+      :text
+        :shadow 0 1px #fff
+
+      .aspect
+        :cursor default
+        :display inline
+        :color #bbb
+        :font
+          :size 12px
+        a
+          :font
+            :weight normal
+          :color #bbb
+
+          &:hover
+            :text
+              :decoration underline
+          &:active
+            :color #999
+        ul
+          :display inline
+          :margin 0
+          :padding 0
+          :list
+            :style none
+          li
+            :display inline
+            &:after
+              :content ","
+            &:last-child:after
+              :content ""
+
+      a
+        :font
+          :weight bold
+
+    :color #444
+    :font
+      :weight normal
+      :size 14px
 
     div.info
-      :color #bababa
-      :font-size 70%
-
+      :color #eee
+      :font-size 11px
+      a
+        :color #ccc
       .time
         a
-          :color #666
+          :color #bbb
+        :font
+          :weight bold
+        :margin
+          :right 5px
+      
+  &:hover
+    div.info, .time
+      a
+        :color #107FC9
+        &:hover
+          :color #22AAE0
+        &:active
+          :color #005D9C
 
-.reshare_pane
+
+.destroy_link .reshare_pane .reshare_button a.inactive
+  :color #ccc
+  &:hover
+    :text
+      :decoration none
+  :cursor default
+
+.destroy_link .reshare_pane
   :margin
     :left 5px
     :right 5px
@@ -240,7 +297,7 @@ li.message
     :margin
       :top 5px
     :padding 0
-    
+
     :background
       :color #fafafa
 
@@ -254,12 +311,10 @@ li.message
     :text-shadow 0 2px #fff
     :color #000
 
-    > li 
+    > li
       :font
         :weight bold
-
-      :padding 8px
-        :right 15px
+      :color #ccc
       :border
         :top 1px solid #fff
         :bottom 1px solid #ccc
@@ -273,10 +328,16 @@ li.message
       a
         :display block
         :height 100%
+        :padding 2px 5px
 
         &:hover
           :background
             :color #eee
+          :text
+            :decoration none
+        &:active
+          :background
+            :color #ccc
 
 
 form
@@ -285,11 +346,11 @@ form
     :size 120%
   :margin 1em
     :left 0em
-  
+
 #user_name
   :margin
     :bottom 20px
-  
+
   img
     :margin
       :right 10px
@@ -305,7 +366,7 @@ form
       :color #000
 
   span
-    :size small 
+    :size small
     :font
       :weight normal
     :color #999
@@ -321,14 +382,14 @@ form
       :display inline
       :margin
         :right 1em
-    
+
 
 #stream div.comments
   :display none
 
   .avatar
-    :width 30px
-    :height 30px
+    :width 35px
+    :height 35px
     :margin
       :right 10px
 
@@ -336,14 +397,14 @@ input.comment_submit
   :display none
   :margin
     :right -10px
-  
+
 
 ul.comment_set
   :margin 0
     :top 1em
   :padding 0
   :list-style none
-  :width 495px
+  :max-width 610px
 
   textarea
     :width 100%
@@ -355,15 +416,28 @@ ul.comment_set
       :color rgba(10,81,109,0.05)
     :padding 0.6em
     :border
-      :bottom 1px solid #ccc
+      :bottom 1px solid #ddd
 
-    .from
+    .content
+      :color #777
+      :margin
+        :top -2px
+      :padding
+        :left 45px
+      .from
+        a
+          :color #444
       :font
-        :size 1em
-    
-    div.time
-      :color #666
-      :font-size 70%
+        :size 12px
+
+      :line
+        :height 18px
+
+      div.time
+        :color #bbb
+        :font
+          :size 11px
+          :weight bold
 
     form
       :margin
@@ -385,7 +459,7 @@ ul.comment_set
     :list-style-type none
     :margin 0
     :padding 0
-        
+
 
 #stream, #profile,
 .comments
@@ -399,16 +473,18 @@ ul.comment_set
     :float left
     :margin
       :right 10px
-    
+
 
 .pagination
   a
     :padding 3px
-  
-.destroy_link, .request_button
+
+li.message .from .destroy_link
+  :display none
   :position absolute
-  :right 2em
-  :bottom 15px
+  :right 0
+  :font
+    :size 12px
   a
     :color #999
     :font
@@ -416,11 +492,6 @@ ul.comment_set
     &:hover
       :text
         :decoration underline
-      :background none
-
-.destroy_link
-  :display none
-  :font-size smaller
 
 .request_buttons
   :position absolute
@@ -456,17 +527,24 @@ ul.comment_set
     :color #ccc
 
 
-input[type='text'], textarea
+input[type='text'],
+input[type='password'],
+textarea
   :font
-    :family 'lucida grande', 'sans-serif'
+    :family 'Arial', 'Helvetica', sans-serif
     :size 14px
   :padding 0.3em
   :display block
   :width 66%
-  :border-top 1px solid #666
+  :border 1px solid #ccc
   :height auto
 
-#submit_block
+  :border-radius 5px
+  :-webkit-border-radius 5px
+  :-moz-border-radius 5px
+
+
+.submit_block
   :text
     :align right
   :font
@@ -478,12 +556,15 @@ form p
   :margin 0
 
 label
+  :font
+    :family 'Arial', 'Helvetica', sans-serif
+    :weight normal
   :color #999
   :position absolute
   :top 3px
   :left 0.48em
-  :font
-    :weight normal
+  :text
+    :shadow 0 1px 1px #eee
 
 #publisher
   :color #999
@@ -496,38 +577,27 @@ label
 
   p
     :position absolute
-    :left 0 
+    :left 0
     :top 0
-  
+
   form
     :display inline
 
     input[type='submit']
-      :float right
+      :display block
       :margin
         :right 20px
-        :top 26px
+      :width 100%
 
   textarea
-    :width 600px
+    :width 570px
     :height 42px
     :margin
       :top 0
       :bottom 0
 
-    :box-shadow 0 1px #fff
-    :-moz-box-shadow 0 1px #fff
-    :-webkit-box-shadow 0 1px #fff
-
-  .button
-    :margin-left 100px
-
-  img
-    :-webkit-box-shadow 0 1px 0 #fff
-    :border 1px solid #bbb
-      :top 1px solid #666
-    
-
+  .buttons
+    :float right
 
 #image_picker
   .small_photo
@@ -563,13 +633,13 @@ label
 
   .name
     :position absolute
-    :z-index 6 
+    :z-index 6
     :padding 1em
     :background rgba(0,0,0,0.8)
     :bottom 20px
     :font
       :size 18px
-    
+
     :text-shadow 0 2px 0 #000
 
     .time
@@ -586,7 +656,7 @@ label
 .field_with_submit
   input[type='text']
     :width 82%
-    :display inline 
+    :display inline
 
 h1.big_text
   :position relative
@@ -615,7 +685,7 @@ h1.big_text
 
   :margin 0
     :top 25px
-    :bottom 25px 
+    :bottom 25px
 
   :min-height 36px
 
@@ -657,6 +727,8 @@ h1.big_text
     :top 8px
     :bottom 1px
 
+  :font
+    :family 'Arial', 'Helvetica', sans-serif
 
   #aspect_manage_button
     :display inline
@@ -670,7 +742,6 @@ h1.big_text
     :list
       :style none
 
-
     > li
       :padding 0
       :display inline
@@ -678,15 +749,9 @@ h1.big_text
         :right 2px
 
       a
-        :text-shadow 0 2px 0 #444
-        :-webkit-border-radius 3px 3px 0 0
-        :-moz-border-radius 3px 3px 0 0
+        :text-shadow 0 1px 0 #444
         :line
           :height 22px
-        :background
-          :color #444
-
-        :border 1px solid #555
 
         :padding 3px 8px
           :bottom 3px
@@ -698,10 +763,13 @@ h1.big_text
           :color #ccc
 
       &.selected a
+        :-webkit-border-radius 5px 5px 0 0 
+        :-moz-border-radius 5px 5px 0 0 
+
         :-webkit-box-shadow 0px -4px 6px -2px #777
         :-moz-box-shadow 0px -4px 6px -2px #777
 
-        :text-shadow 0 2px 0 #fff
+        :text-shadow 0 1px 0 #fff
         :padding
           :top 4px
           :bottom 5px
@@ -712,12 +780,12 @@ h1.big_text
         :background
           :color #eee
 
-        :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#eee))
-        :background -moz-linear-gradient(19% 75% 90deg, #eee, #fff)
+        :background -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#F7F7F7))
+        :background -moz-linear-gradient(19% 75% 90deg, #f7f7f7, #fff)
 
         :border 1px solid #fff
-          :bottom 1px solid #eee
-        :color #000
+          :bottom 1px solid #F7F7F7
+        :color #444
         &:hover
           :background
             :color #efefef
@@ -757,7 +825,7 @@ h1.big_text
   :list
     :style none
 
-  h1
+  h3
     :display inline-block
 
   .tip
@@ -776,7 +844,7 @@ h1.big_text
 
     ul.tools
       :position absolute
-      :top 10px
+      :top 5px
       :right 0
       :display inline
       :padding 0
@@ -795,7 +863,7 @@ h1.big_text
   .grey
     :color #999
     :cursor default
-    :text-shadow 0 2px #fff
+    :text-shadow 0 1px #fff
 
   ul.dropzone
     :min-height 20px
@@ -815,7 +883,7 @@ h1.big_text
   .person,
   .requested_person
     :display inline-block
-    :padding 5px 
+    :padding 5px
     :cursor move
     :margin 5px
     :z-index 10
@@ -839,21 +907,47 @@ h1.big_text
         :-moz-box-shadow 0 2px 4px #333
         :opacity 0.9
 
-#notification_badge
-  :position fixed
-  :bottom 0
-  :margin
-    :left 854px
+ul#settings_nav
+  :list
+    :style none
+  :padding 0
+  :marign 0
 
-  a
-    :background
-      :color #eee
+  :font
+    :size larger
 
-    :border 1px solid #ccc
-      :bottom none
+  > li
+    a
+      :font
+        :size smaller
+      :display block
+      :height 100%
+      :border
+        :bottom 1px solid #eee
+      :padding 2px
 
-    :padding 3px 10px
+
+.settings_pane
+  :display none
+
 
 #fancybox-close:hover
   :background
     :color transparent
+
+
+#friend_pictures
+  :margin
+    :top 12px
+  :line-height 1em
+  img
+    :margin-right -1px
+    :width 35px
+    :height 35px
+
+#thumbnails
+  :line-height 14px
+
+#aspect_list
+  :margin 0
+  :padding 0

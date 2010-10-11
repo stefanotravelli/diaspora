@@ -1,10 +1,8 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-
-
-require 'config/environment'
+require File.join(File.dirname(__FILE__), "..", "..", "config", "environment")
 
 def set_app_config username
   current_config = YAML.load(File.read(Rails.root.join('config', 'app_config.yml.example')))

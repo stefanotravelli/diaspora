@@ -1,7 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
 
 module ApplicationHelper
   def current_aspect?(aspect)
@@ -37,7 +36,7 @@ module ApplicationHelper
     when "Person"
       person_path(person)
     else
-      "unknown person"
+      I18n.t('application.helper.unknown_person')
     end
   end
 
@@ -61,10 +60,15 @@ module ApplicationHelper
   end
 
   def new_request(request_count)
-    "new_requests" if request_count > 0
+    "new_requests" if request_count > 0 #Should not be Il8ned
   end
 
   def post_yield_tag(post)
     (':' + post.id.to_s).to_sym
+  end
+
+  def connected_fb_as token
+    response_hash = MiniFB.get(token, 'me')
+    "Connected to facebook as #{response_hash[:name]}"
   end
 end

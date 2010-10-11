@@ -1,8 +1,6 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
-
-
 
   module Encryptable
    def signable_string
@@ -17,7 +15,7 @@
       if person.nil?
         Rails.logger.info("Verifying sig on #{signable_string} but no person is here")
         return false
-      elsif person.encryption_key.nil?
+      elsif person.public_key.nil?
         Rails.logger.info("Verifying sig on #{signable_string} but #{person.real_name} has no key")
         return false
       elsif signature.nil?
@@ -25,7 +23,7 @@
         return false
       end
       Rails.logger.debug("Verifying sig on #{signable_string} from person #{person.real_name}")
-      validity = person.encryption_key.verify "SHA", Base64.decode64(signature), signable_string
+      validity = person.public_key.verify "SHA", Base64.decode64(signature), signable_string
       Rails.logger.debug("Validity: #{validity}")
       validity
     end

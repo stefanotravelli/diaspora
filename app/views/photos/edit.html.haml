@@ -1,12 +1,11 @@
 -#   Copyright (c) 2010, Diaspora Inc.  This file is
--#   licensed under the Affero General Public License version 3.  See
+-#   licensed under the Affero General Public License version 3 or later.  See
 -#   the COPYRIGHT file.
-
 
 %h1.big_text
   .back
     = link_to "⇧ #{@album.name}", album_path(@album)
-  = "Editing #{@photo.image}"
+  = "#{t('.editing')} #{@photo.image}"
 
 %div{:id => @photo.id}
 
@@ -14,13 +13,15 @@
     = linked_scaled_photo @photo, @album
 
   = form_for @photo do |p|
+    = p.label :caption
     = p.text_field :caption, :value => @photo.caption
     = p.submit
+  %div{:class => 'clear'}
 
   #content_bottom
     .back
       = link_to "⇧ #{@album.name}", album_path(@album)
     -if current_user.owns? @album
       .button.right
-        = link_to 'Delete Photo', @photo, :confirm => 'Are you sure?', :method => :delete
+        = link_to t('.delete_photo'), @photo, :confirm => t('.are_you_sure'), :method => :delete
 

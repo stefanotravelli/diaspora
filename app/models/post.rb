@@ -1,11 +1,10 @@
 #   Copyright (c) 2010, Diaspora Inc.  This file is
-#   licensed under the Affero General Public License version 3.  See
+#   licensed under the Affero General Public License version 3 or later.  See
 #   the COPYRIGHT file.
 
-
 class Post
-  require 'lib/diaspora/websocket'
-  require 'lib/encryptable'
+  require File.expand_path('../../../lib/encryptable', __FILE__)
+  require File.expand_path('../../../lib/diaspora/websocket', __FILE__)
   include MongoMapper::Document
   include ApplicationHelper
   include ROXML
@@ -14,6 +13,9 @@ class Post
 
   xml_accessor :_id
   xml_accessor :person, :as => Person
+  xml_reader   :public
+
+  key :public   , Boolean, :default => false
 
   key :person_id, ObjectId
   key :user_refs, Integer, :default => 0
@@ -32,7 +34,6 @@ class Post
   def self.instantiate params
     self.create params.to_hash
   end
-
 
   def as_json(opts={})
     {
